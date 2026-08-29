@@ -1,6 +1,7 @@
 package nwl.projetos.deploytest.domain.model;
 
 import jakarta.persistence.*;
+import nwl.projetos.deploytest.domain.enums.TaskStatus;
 
 import java.time.LocalDateTime;
 
@@ -21,14 +22,19 @@ public class Task {
     @Column(name = "data_limite")
     private LocalDateTime dataLimite;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private TaskStatus status = TaskStatus.PENDENTE;
+
     public Task() {
     }
 
-    public Task(Long id, String titulo, String descricao, LocalDateTime dataLimite) {
+    public Task(Long id, String titulo, String descricao, LocalDateTime dataLimite, TaskStatus status) {
         this.id = id;
         this.titulo = titulo;
         this.descricao = descricao;
         this.dataLimite = dataLimite;
+        this.status = status;
     }
 
     public Long getId() {
@@ -61,5 +67,13 @@ public class Task {
 
     public void setDataLimite(LocalDateTime dataLimite) {
         this.dataLimite = dataLimite;
+    }
+
+    public TaskStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(TaskStatus status) {
+        this.status = status;
     }
 }
