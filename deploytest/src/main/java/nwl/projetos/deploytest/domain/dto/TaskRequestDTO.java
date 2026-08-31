@@ -2,7 +2,6 @@ package nwl.projetos.deploytest.domain.dto;
 
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import nwl.projetos.deploytest.domain.enums.TaskStatus;
 
@@ -21,7 +20,11 @@ public record TaskRequestDTO(
         @FutureOrPresent(message = "A data limite não pode estar no passado")
         LocalDateTime dataLimite,
 
-        @NotNull(message = "O status é obrigatório")
         TaskStatus status
 ) {
+    public TaskRequestDTO {
+        if (status == null) {
+            status = TaskStatus.PENDENTE;
+        }
+    }
 }
